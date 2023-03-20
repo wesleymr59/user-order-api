@@ -1,17 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import os
+from src.configs.enviroments import get_environment_variables
 
+env = get_environment_variables()
 class DBConnectionHandler:
 
     def __init__(self) -> None:
         try:
-
-            self._host = os.environ['MYSQL_HOST']
-            self._port = os.environ['MYSQL_PORT']
-            self._user = os.environ['MYSQL_USER']
-            self._pass = os.environ['MYSQL_PASSWORD']
-            self._db = os.environ['MYSQL_DATABASE']
+            self._host = env.MYSQL_HOST
+            self._port = env.MYSQL_PORT
+            self._user = env.MYSQL_USER
+            self._pass = env.MYSQL_PASSWORD
+            self._db = env.MYSQL_DATABASE
+            print(self._pass)
         except KeyError as error:
             print(f"Error in database environment variables: {error}", flush = True)
 

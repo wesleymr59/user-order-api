@@ -35,14 +35,19 @@ class AuthHandler():
         return encoded_jwt
 
     async def get_token(self):
+        try:
         # data to be signed using token
-        data = {
-            'sub': 'secret information',
-            'from': 'app-user'
-        }
-        token = self.create_access_token(data=data)
-        return {'token': token}
-
+            data = {
+                'sub': 'secret information',
+                'from': 'app-user'
+            }
+            token = self.create_access_token(data=data)
+            return {'token': token}
+        except JWTError:
+            raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=JWTError,
+        )
     # the endpoint to verify the token
     def verify_token(self, token: str):
         try:
@@ -52,7 +57,7 @@ class AuthHandler():
             if payload:
                 return token
         except JWTError:
-            raise HTTPException(
+            return HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=JWTError,
         )

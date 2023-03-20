@@ -32,13 +32,14 @@ class UserService():
     
     def get_user(self, cpf: str):
         return _user_repository.select(cpf)
-    
+        
     def delete_user(self, cpf: str, token: str ):
-        user_session = _session.getSession(token)
-        _user_repository.delete(cpf, user_session["id"])
-        return user_session
-    
+            user_session = _session.getSession(token)
+            _user_repository.delete(cpf, user_session["id"])
+            return user_session
+        
     def update_user(self, body: list, cpf: str, token:str):
+        
         self.validate_dados(body)
         user_session = _session.getSession(token)
         _user_repository.update(body, cpf)

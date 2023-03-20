@@ -32,9 +32,7 @@ class UserRepository():
                 if data is not None:
                     return data
                 else:
-                    raise "Object is Null"
-            except NoResultFound:
-                return None
+                    return None
             except Exception as exception:
                 db.session.rollback()
                 raise exception
