@@ -57,7 +57,7 @@ class AuthHandler():
             if payload:
                 return token
         except JWTError:
-            return HTTPException(
+            raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=JWTError,
+            detail=JWTError
         )

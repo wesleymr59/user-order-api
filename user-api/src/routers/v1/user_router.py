@@ -20,11 +20,8 @@ async def create_user(body: userBody):
 @router.get("/get_user/{cpf}", response_model=list[User])
 async def get_user(cpf: str, token = Depends(__AuthHandler.verify_token)) -> (list[tuple] | None):
     user =  __user_service.get_user(cpf)
-    print(user)
     if user == []:
-        print("taaqui")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario não encontrado")
-
 
 @router.delete("/dele_user")
 async def delete_user(cpf: str,token = Depends(__AuthHandler.verify_token)):
@@ -38,4 +35,4 @@ async def update_user(body: userUpdate, cpf: str, token = Depends(__AuthHandler.
     try:
         return __user_service.update_user(jsonable_encoder(body), cpf, token)
     except:
-            raise HTTPException(status_code=404, detail="nao foi possivel atualizar o usuario")
+        raise HTTPException(status_code=404, detail="nao foi possivel atualizar o usuario")
