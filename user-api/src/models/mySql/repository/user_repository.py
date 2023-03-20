@@ -28,11 +28,13 @@ class UserRepository():
         with DBConnectionHandler() as db:
             try:
                 data = db.session.query(User.id, User.name, User.email, User.phone_number,
-                                        User.created_at, User.updated_at).filter(User.cpf == cpf).all()
+                                        User.created_at, User.updated_at).filter(User.cpf == cpf).one_or_none()
                 if data is not None:
                     return data
                 else:
                     return None
+            except NoResultFound:
+                return None
             except Exception as exception:
                 db.session.rollback()
                 raise exception

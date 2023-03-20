@@ -12,11 +12,15 @@ class userBody(BaseModel):
     phone_number: str | None = Field(
         default=None, title="14123456789", max_length=15
     )
+    class Config:
+        orm_mode = True
 
 class userUpdate(BaseModel):
     name: str
     email: str
     phone_number: str
+    class Config:
+        orm_mode = True
 class User(BaseModel):
     id: int
     name : str
@@ -24,6 +28,6 @@ class User(BaseModel):
     phone_number: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    
+
     class Config:
         orm_mode = True
