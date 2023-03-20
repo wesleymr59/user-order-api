@@ -1,0 +1,12 @@
+# - Dockerfile configurations
+FROM python:3.10.1-alpine3.15
+LABEL DESCRIPTION="user-api" 
+COPY requirements.txt /
+RUN pip3 install -r requirements.txt
+WORKDIR /usr/src/app
+COPY . .
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+
+# docker image build -t user-api:latest .
+
+# docker container run --rm -it -v ${pwd}:/usr/src/app --env-file .env -p 81:80 --name user-api user-api:latest

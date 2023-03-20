@@ -1,0 +1,10 @@
+version: '2.1'
+services:
+    app:
+        build: .
+        ports:
+        - "82:82"
+        volumes:
+        - .:/usr/src/app
+        env_file:
+        - ./.env
