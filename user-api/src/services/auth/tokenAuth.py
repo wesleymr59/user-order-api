@@ -26,17 +26,15 @@ class AuthHandler():
         
         to_encode = data.copy()
 
-        # expire time of the token
         expire = datetime.utcnow() + timedelta(minutes=999)
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-	
-    # return the generated token
+
         return encoded_jwt
 
     async def get_token(self):
         try:
-        # data to be signed using token
+
             data = {
                 'sub': 'secret information',
                 'from': 'app-user'
@@ -48,11 +46,9 @@ class AuthHandler():
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=JWTError,
         )
-    # the endpoint to verify the token
+
     def verify_token(self, token: str):
         try:
-        # try to decode the token, it will
-        # raise error if the token is not correct
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             if payload:
                 return token

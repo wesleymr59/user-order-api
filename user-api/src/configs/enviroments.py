@@ -21,6 +21,8 @@ class EnvironmentSettings(BaseSettings):
     REDIS_HOST:str
 
     ENV_TOKEN:str
+    
+    HASH_DECODE: str
 
     class Config:
         env_file = get_env_filename()
