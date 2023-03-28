@@ -19,10 +19,8 @@ class EnvironmentSettings(BaseSettings):
     MYSQL_ROOT_PASSWORD:str
     MYSQL_DATABASE:str
     REDIS_HOST:str
-
     ENV_TOKEN:str
 
-    HASH_CODE: str
 
     class Config:
         env_file = get_env_filename()

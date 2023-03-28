@@ -27,7 +27,6 @@ class UserService():
         
     def insert_user(self, body: list):
         self.validate_dados(body)
-        print("adasdasdsads")
         user_created = user_repository.insert(body)
         body["id"]=user_created
         access_token = authHandler.create_access_token(user_created)

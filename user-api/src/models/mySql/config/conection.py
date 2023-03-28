@@ -12,7 +12,6 @@ class DBConnectionHandler:
             self._user = env.MYSQL_USER
             self._pass = env.MYSQL_PASSWORD
             self._db = env.MYSQL_DATABASE
-            print(self._pass)
         except KeyError as error:
             print(f"Error in database environment variables: {error}", flush = True)
 
