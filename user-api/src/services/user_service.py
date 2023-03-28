@@ -23,21 +23,24 @@ class UserService():
         if not functionsAux.validar_telefone(body["phone_number"]):
             raise HTTPException(status_code=400, detail="Telefone invalido")
         
+        return True
+        
     def insert_user(self, body: list):
         self.validate_dados(body)
+        print("adasdasdsads")
         user_created = user_repository.insert(body)
         body["id"]=user_created
         access_token = authHandler.create_access_token(user_created)
         session.addSession(access_token, body)
         return access_token
-    
+         
     def get_user(self, cpf: str):
         return user_repository.select(cpf)
         
     def delete_user(self, cpf: str, token: str ):
-            user_session = session.getSession(token)
-            user_repository.delete(cpf, user_session["id"])
-            return user_session
+        user_session = session.getSession(token)
+        user_repository.delete(cpf, user_session["id"])
+        return user_session
         
     def update_user(self, body: list, cpf: str, token:str):
         self.validate_dados(body)

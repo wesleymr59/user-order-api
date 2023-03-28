@@ -6,7 +6,7 @@ from pydantic import BaseSettings
 @lru_cache
 def get_env_filename():
     runtime_env = os.getenv("ENV")
-    return f".env.{runtime_env}" if runtime_env else ".env"
+    return f".env" if runtime_env else ".env"
 
 
 class EnvironmentSettings(BaseSettings):
@@ -21,8 +21,8 @@ class EnvironmentSettings(BaseSettings):
     REDIS_HOST:str
 
     ENV_TOKEN:str
-    
-    HASH_DECODE: str
+
+    HASH_CODE: str
 
     class Config:
         env_file = get_env_filename()

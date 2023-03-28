@@ -1,4 +1,10 @@
 import re
+import hmac
+import hashlib
+
+from src.configs.enviroments import get_environment_variables
+
+env = get_environment_variables()
 
 class FunctionsAux():
     def validar_email(self, email):

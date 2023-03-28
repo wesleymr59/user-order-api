@@ -6,7 +6,6 @@ import pymysql
 from sqlalchemy import exc
 from fastapi.encoders import jsonable_encoder
 
-
 class UserRepository():
     def insert(self, body: list):
         with DBConnectionHandler() as db:
