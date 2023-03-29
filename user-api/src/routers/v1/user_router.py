@@ -10,28 +10,28 @@ user_service = UserService()
 authHandler = AuthHandler()
 env = get_environment_variables()
 
-@router.post("/create")
+@router.post("/create", status_code=201)
 async def create_user(body: userBody):
     return {"token": user_service.insert_user(jsonable_encoder(body))}
     
 
 @router.get("/get_user/{cpf}", response_model=User)
-async def get_user(cpf: str, token = Depends(authHandler.verify_token)) -> (list[tuple] | None):
+async def get_user(cpf: str, token = Depends(authHandler.verify_token)):
     user =  user_service.get_user(cpf)
     if user == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario não encontrado")
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Usuario não encontrado")
     return user
 
-@router.delete("/dele_user")
+@router.delete("/delete_user")
 async def delete_user(cpf: str,token = Depends(authHandler.verify_token)):
     try:
         return user_service.delete_user(cpf, token)
     except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Não foi possível deletar o usuario")
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Não foi possível deletar o usuario")
 
-@router.put("/dele_user")
+@router.put("/put_user")
 async def update_user(body: userUpdate, cpf: str, token = Depends(authHandler.verify_token)):
     try:
         return user_service.update_user(jsonable_encoder(body), cpf, token)
     except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Não foi possível atualizar o usuario")
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Não foi possível atualizar o usuario")

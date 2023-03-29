@@ -53,7 +53,6 @@ class UserRepository():
     def update(self, body: list, cpf: str,):
         with DBConnectionHandler() as db:
             try:
-                print("doasdpas")
                 db.session.query(User).filter(User.cpf == cpf).update({"name":body["name"],
                                                                        "email":body["email"],
                                                                        "phone_number":body["phone_number"],
