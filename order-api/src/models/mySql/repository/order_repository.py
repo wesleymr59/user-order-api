@@ -60,13 +60,9 @@ class OrderRepository():
             try:
                 data = db.session.query(Order.id, Order.user_id, Order.item_description, Order.item_quantity, Order.item_price,  Order.total_value,
                                         Order.created_at, Order.updated_at).filter(Order.user_id == id).all()
-                print(data)
-                if data is not None:
-                    return data
-                else:
-                    raise "Object is Null"
-            except NoResultFound:
-                return None
+                if data == []:
+                    return None
+                return data
             except Exception as exception:
                 db.session.rollback()
                 raise exception
@@ -76,12 +72,9 @@ class OrderRepository():
             try:
                 data = db.session.query(Order.id, Order.user_id, Order.item_description, Order.item_quantity, Order.item_price,  Order.total_value,
                                         Order.created_at, Order.updated_at).filter(Order.id == id).all()
-                if data is not None:
-                    return data
-                else:
-                    raise "Object is Null"
-            except NoResultFound:
-                return None
+                if data == []:
+                    return None
+                return data
             except Exception as exception:
                 db.session.rollback()
                 raise exception
