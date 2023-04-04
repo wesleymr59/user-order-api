@@ -1,21 +1,17 @@
-# import libraries
+import os
 from fastapi import FastAPI, status, HTTPException
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from datetime import datetime, timedelta
-import os
+from src.configs.enviroments import get_environment_variables
+
+env = get_environment_variables()
 
 # replace it with your 32 bit secret key
-SECRET_KEY = os.environ["ENV_TOKEN"]
+SECRET_KEY = env.ENV_TOKEN
 
 # encryption algorithm
 ALGORITHM = "HS256"
-
-# Pydantic Model that will be used in the
-# token endpoint for the response
-class Token(BaseModel):
-	access_token: str
-	token_type: str
 
 class AuthHandler(): 
     def create_access_token(self, user: int):

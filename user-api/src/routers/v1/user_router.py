@@ -3,12 +3,12 @@ from fastapi.encoders import jsonable_encoder
 from src.services.user_service import UserService
 from src.services.auth.tokenAuth import AuthHandler
 from src.schemas.user_schema import userBody, User, userUpdate
-from src.configs.enviroments import get_environment_variables
+
 
 router = APIRouter(prefix="/v1/users",tags=["user"])
 user_service = UserService()
 authHandler = AuthHandler()
-env = get_environment_variables()
+
 
 @router.post("/create", status_code=201)
 async def create_user(body: userBody):
