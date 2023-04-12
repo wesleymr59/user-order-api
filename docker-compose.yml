@@ -21,17 +21,5 @@ services:
       volumes:
           - mysql_data:/var/lib/mysql
           - ./create_data_base.sql:/docker-entrypoint-initdb.d/create_data_base.sql
-
-  dd-agent:
-        image: gcr.io/datadoghq/agent:7
-        container_name: dd-agent
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock:ro
-            - /proc/:/host/proc/:ro
-            - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-        environment:
-            DD_API_KEY: 3f9edd6e2280324affa34f03b4e4fb7a
-            DD_SITE: datadoghq.com
-        restart: always
 volumes:
     mysql_data:

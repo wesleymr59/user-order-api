@@ -29,21 +29,32 @@ async def get_order_user(token = Depends(_AuthHandler.verify_token)):
 async def get_all_orders(token = Depends(_AuthHandler.verify_token)):
     """busca todas os pedidos"""
     get_all_orders = _order_service.get_all_orders()
-    if get_all_orders == None:
+    if get_all_orders == []:
          raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Pedidos nao encontrados")
     return get_all_orders
      
 
-@router.delete("/order/delete_all_order", response_model=list[OrderResponse])
+@router.delete("/order/delete_all_order", response_model=list[OrderResponse] | None)
 async def delete_order_user(token = Depends(_AuthHandler.verify_token)):
     """Deleta todos os pedidos do usuario"""
-    return _order_service.delete_all_order_user(token)
+    try:
+        return _order_service.delete_all_order_user(token)
+    except:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Não foi possível deletar todos os pedidos")
 
-@router.delete("/order/delete_order", response_model=list[OrderResponse])
+@router.delete("/order/delete_order", response_model=list[OrderResponse] | None)
 async def delete_user(id_order: int, token = Depends(_AuthHandler.verify_token)):
     """deleta o pedido pelo id"""
-    return _order_service.delete_order(id_order)
-
-@router.put("/order/delete_user", response_model=list[OrderResponse])
+    try: 
+        orderDelete = _order_service.delete_order(id_order)
+        if orderDelete == None:
+         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Pedidos nao encontrados")
+     
+        return orderDelete
+    
+    except:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="Não foi possível deletar o pedido")
+    
+@router.put("/order/atualizar_user", response_model=list[OrderResponse])
 async def update_user(body: orderBody, id: int, token = Depends(_AuthHandler.verify_token)):
     return _order_service.update_order(jsonable_encoder(body), id)

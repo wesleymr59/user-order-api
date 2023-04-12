@@ -29,7 +29,7 @@ class OrderService():
     def delete_all_order_user(self, token: str ):
             user_session = _session.getSession(token)
             all_order = _user_repository.select_orders_user(user_session["id"])
-            _user_repository.delete(user_session["id"])
+            _user_repository.delete_by_userId(user_session["id"])
             return all_order
     
     def delete_order(self, id_order: int):
